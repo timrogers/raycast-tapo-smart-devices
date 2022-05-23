@@ -25,7 +25,16 @@ const refreshDevices = async (
     loadingToast = await showToast({ title: "Fetching devices...", style: Toast.Style.Animated });
   }
 
-  const devices = await getDevices();
+  let devices;
+
+  try {
+    devices = await getDevices();
+  } catch (error) {
+    showToast({ title: (error as Error).toString(), style: Toast.Style.Failure });
+    setIsLoadingFn(false);
+    return;
+  }
+
   const locatedDevices = await locateDevicesOnLocalNetwork(devices);
   const augmentedLocatedDevices = await queryDevicesOnLocalNetwork(locatedDevices);
   setDevicesFn(augmentedLocatedDevices);
