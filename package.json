@@ -13,6 +13,7 @@
     {
       "name": "index",
       "title": "Manage Devices",
+      "subtitle": "Tapo",
       "description": "List smart devices on your local network, and turn them on or off",
       "mode": "view"
     }

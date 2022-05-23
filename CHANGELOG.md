@@ -1,5 +1,5 @@
 # Tapo Smart Devices Changelog
 
-## [v1.0.0] - 2022-05-16
+## [v1.0.0] - 2022-05-23
 
 Initial release ❤️
