@@ -1,0 +1,16 @@
+name: Pull upstream changes from the `raycast/extensions` repo
+
+on:
+  schedule:
+    - cron:  '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: timrogers/pull-raycast-extension-changes@v1.0.0
+        with:
+          extension_name: tapo-smart-devices
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
