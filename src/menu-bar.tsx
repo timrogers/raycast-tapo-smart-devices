@@ -36,26 +36,6 @@ const refreshDevices = async (
   setIsLoadingFn(false);
 };
 
-const AvailableDeviceMenuBarItem = (props: { device: AvailableDevice; refreshFn: () => void }): JSX.Element => {
-  const { device, refreshFn } = props;
-
-  return (
-    <MenuBarExtra.Item
-      title={`${device.alias} (${getOnStateText(device)})`}
-      key={device.id}
-      icon={getDeviceIcon(device)}
-      tooltip={device.name}
-      onAction={() => {
-        if (device.isTurnedOn) {
-          turnDeviceOff(device).then(refreshFn);
-        } else {
-          turnDeviceOn(device).then(refreshFn);
-        }
-      }}
-    />
-  );
-};
-
 export default function Command() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,33 +44,26 @@ export default function Command() {
     refreshDevices(setDevices, setIsLoading);
   }, []);
 
-  const [availableDevices, unavailableDevices] = split(devices, isAvailableDevice);
+  const [availableDevices, _unavailableDevices] = split(devices, isAvailableDevice);
 
-  return (
-    <MenuBarExtra icon={Icon.LightBulb} isLoading={isLoading} tooltip="Tapo Smart Devices">
-      {availableDevices.length &&
-        availableDevices.map((device) => (
-          <AvailableDeviceMenuBarItem
-            device={device}
+  if (availableDevices.length) {
+    return (
+      <MenuBarExtra icon={Icon.LightBulb} tooltip="Tapo Smart Devices">
+        <MenuBarExtra.Item title="Available" />
+        {availableDevices.map((device) => (
+          <MenuBarExtra.Item
+            title={`${device.alias} (${getOnStateText(device)})`}
             key={device.id}
-            refreshFn={() => {
-              setIsLoading(true);
-              refreshDevices(setDevices, setIsLoading);
+            icon={getDeviceIcon(device)}
+            tooltip={device.name}
+            onAction={() => {
+              console.log("* LOLOL");
             }}
           />
         ))}
-      {unavailableDevices.length && (
-        <MenuBarExtra.Submenu icon={Icon.XMarkCircle} title="Unavailable">
-          {unavailableDevices.map((device) => (
-            <MenuBarExtra.Item
-              title={device.alias}
-              key={device.id}
-              icon={getDeviceIcon(device)}
-              tooltip={device.name}
-            />
-          ))}
-        </MenuBarExtra.Submenu>
-      )}
-    </MenuBarExtra>
-  );
+      </MenuBarExtra>
+    );
+  } else {
+    return <MenuBarExtra icon={Icon.LightBulb} isLoading={isLoading} tooltip="Tapo Smart Devices" />;
+  }
 }
