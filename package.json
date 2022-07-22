@@ -11,11 +11,18 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
+      "name": "view",
       "title": "Manage Devices",
       "subtitle": "Tapo",
       "description": "List smart devices on your local network, and turn them on or off",
       "mode": "view"
+    },
+    {
+      "name": "menu-bar",
+      "title": "Manage Devices",
+      "subtitle": "Tapo",
+      "description": "List smart devices on your local network, and turn them on or off",
+      "mode": "menu-bar"
     }
   ],
   "preferences": [
@@ -35,7 +42,7 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.35.2",
+    "@raycast/api": "^1.38.1",
     "local-devices": "github:timrogers/local-devices",
     "tp-link-tapo-connect": "^1.0.8"
   },
