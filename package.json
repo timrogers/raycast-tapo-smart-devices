@@ -35,7 +35,7 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.35.2",
+    "@raycast/api": "^1.38.2",
     "local-devices": "github:timrogers/local-devices",
     "tp-link-tapo-connect": "^1.0.8"
   },
