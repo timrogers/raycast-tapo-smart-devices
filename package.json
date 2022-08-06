@@ -11,11 +11,18 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
+      "name": "view",
       "title": "Manage Devices",
       "subtitle": "Tapo",
       "description": "List smart devices on your local network, and turn them on or off",
       "mode": "view"
+    },
+    {
+      "name": "menu-bar",
+      "title": "Manage Devices",
+      "subtitle": "Tapo",
+      "description": "List smart devices on your local network, and turn them on or off",
+      "mode": "menu-bar"
     }
   ],
   "preferences": [
