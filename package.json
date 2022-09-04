@@ -42,19 +42,19 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.39.1",
+    "@raycast/api": "^1.39.2",
     "local-devices": "^4.0.0",
     "tp-link-tapo-connect": "^1.0.8"
   },
   "devDependencies": {
-    "@types/node": "~18.7.10",
+    "@types/node": "~18.7.14",
     "@types/react": "^18.0.17",
-    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.34.0",
-    "eslint": "^8.22.0",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.2"
   },
   "scripts": {
     "build": "ray build -e dist",
