@@ -42,7 +42,7 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.39.1",
+    "@raycast/api": "^1.40.1",
     "local-devices": "^4.0.0",
     "tp-link-tapo-connect": "^1.0.8"
   },
