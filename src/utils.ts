@@ -2,7 +2,7 @@ export const normaliseMacAddress = (macAddress: string): string => macAddress.re
 
 export const split = (
   items: any[],
-  splitFn: (item: any) => boolean
+  splitFn: (item: any) => boolean,
 ): [arrayItemsWhereSplitFnReturnedTrue: any[], arrayItemsWhereSplitFnReturnedFalse: any[]] => {
   return items.reduce(
     (accumulator, element) => {
@@ -14,6 +14,6 @@ export const split = (
         return [truthyItems, [...falseyItems, element]];
       }
     },
-    [[], []]
+    [[], []],
   );
 };
