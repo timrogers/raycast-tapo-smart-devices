@@ -84,7 +84,7 @@ export const locateDevicesOnLocalNetwork = async (devices: Device[]): Promise<De
 
   return devices.map((device) => {
     const localDevice = localDevices.find(
-      (localDevice) => normaliseMacAddress(localDevice.mac) === normaliseMacAddress(device.macAddress)
+      (localDevice) => normaliseMacAddress(localDevice.mac) === normaliseMacAddress(device.macAddress),
     );
 
     if (localDevice) {
@@ -113,7 +113,7 @@ export const queryDevicesOnLocalNetwork = async (devices: Device[]): Promise<Dev
         // be able to query its state.
         return device;
       }
-    })
+    }),
   );
 };
 

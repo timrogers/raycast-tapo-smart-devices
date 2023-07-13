@@ -16,7 +16,7 @@ import { split } from "./utils";
 
 const refreshDevices = async (
   setDevicesFn: (devices: Device[]) => void,
-  setIsLoadingFn: (isLoading: boolean) => void
+  setIsLoadingFn: (isLoading: boolean) => void,
 ): Promise<void> => {
   let devices;
 
