@@ -1,9 +1,9 @@
 export const normaliseMacAddress = (macAddress: string): string => macAddress.replace(/:/g, "").toUpperCase();
 
-export const split = (
-  items: unknown[],
-  splitFn: (item: unknown) => boolean,
-): [arrayItemsWhereSplitFnReturnedTrue: unknown[], arrayItemsWhereSplitFnReturnedFalse: unknown[]] => {
+export const split = <T>(
+  items: T[],
+  splitFn: (item: T) => boolean,
+): [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]] => {
   return items.reduce(
     (accumulator, element) => {
       const [truthyItems, falseyItems] = accumulator;
@@ -14,6 +14,6 @@ export const split = (
         return [truthyItems, [...falseyItems, element]];
       }
     },
-    [[], []],
-  );
+    [[], []] as [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]]
+  ) as [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]];
 };
