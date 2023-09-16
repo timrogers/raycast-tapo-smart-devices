@@ -14,6 +14,6 @@ export const split = <T>(
         return [truthyItems, [...falseyItems, element]];
       }
     },
-    [[], []] as [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]]
+    [[], []] as [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]],
   ) as [arrayItemsWhereSplitFnReturnedTrue: T[], arrayItemsWhereSplitFnReturnedFalse: T[]];
 };
