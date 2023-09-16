@@ -108,12 +108,12 @@ export default function Command() {
     refreshDevices(setDevices, setIsLoading, true);
   }, []);
 
-  const [availableDevices, unavailableDevices] = split(devices, isAvailableDevice);
+  const [availableDevices, unavailableDevices] = split<Device>(devices, isAvailableDevice);
 
   return (
     <List isLoading={isLoading}>
       <List.Section title="Available">
-        {availableDevices.map((device) => (
+        {(availableDevices as AvailableDevice[]).map((device) => (
           <AvailableDeviceListItem
             device={device}
             key={device.id}

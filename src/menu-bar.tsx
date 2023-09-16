@@ -1,7 +1,7 @@
 import { Icon, MenuBarExtra } from "@raycast/api";
 import { useEffect, useState } from "react";
 
-import { Device } from "./types";
+import { AvailableDevice, Device } from "./types";
 import {
   getDeviceIcon,
   getDevices,
@@ -42,13 +42,13 @@ export default function Command() {
     refreshDevices(setDevices, setIsLoading);
   }, []);
 
-  const [availableDevices, unavailableDevices] = split(devices, isAvailableDevice);
+  const [availableDevices, unavailableDevices] = split<Device>(devices, isAvailableDevice);
 
   return (
     <MenuBarExtra icon={Icon.LightBulb} tooltip="Tapo Smart Devices" isLoading={isLoading}>
       {isLoading && <MenuBarExtra.Item title="Loading ⏳" />}
       {availableDevices.length && <MenuBarExtra.Item title="Available" />}
-      {availableDevices.map((device) => (
+      {(availableDevices as AvailableDevice[]).map((device) => (
         <MenuBarExtra.Item
           title={`${device.alias} (${getOnStateText(device)})`}
           key={device.id}

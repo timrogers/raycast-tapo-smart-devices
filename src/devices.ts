@@ -1,5 +1,4 @@
 import find from "local-devices";
-import util from "util";
 import { getPreferenceValues, showToast, Toast } from "@raycast/api";
 import {
   cloudLogin,
@@ -10,10 +9,9 @@ import {
   turnOff,
   TapoDevice,
   TapoDeviceKey,
-  loginDevice,
 } from "tp-link-tapo-connect";
 
-import { AvailableDevice, Device, DeviceStatusEnum, DeviceTypeEnum, Preferences } from "./types";
+import { Device, DeviceStatusEnum, DeviceTypeEnum, Preferences } from "./types";
 import { normaliseMacAddress } from "./utils";
 
 const tapoDeviceTypeToDeviceType = (tapoDeviceType: string): DeviceTypeEnum => {
@@ -54,8 +52,6 @@ export const getDevices = async (): Promise<Device[]> => {
 };
 
 export const turnDeviceOn = async (device: Device): Promise<void> => {
-  const { email, password } = await getPreferenceValues<Preferences>();
-
   const toast = await showToast({ title: `Turning ${device.alias} on...`, style: Toast.Style.Animated });
 
   // We will only call this function with available, logged-in devices, so we can
@@ -67,8 +63,6 @@ export const turnDeviceOn = async (device: Device): Promise<void> => {
 };
 
 export const turnDeviceOff = async (device: Device): Promise<void> => {
-  const { email, password } = await getPreferenceValues<Preferences>();
-
   const toast = await showToast({ title: `Turning ${device.alias} off...`, style: Toast.Style.Animated });
 
   // We will only call this function with available, logged-in devices, so we can
