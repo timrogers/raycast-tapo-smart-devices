@@ -1,17 +1,8 @@
 import find from "local-devices";
 import { getPreferenceValues, showToast, Toast } from "@raycast/api";
-import {
-  cloudLogin,
-  listDevices,
-  loginDeviceByIp,
-  getDeviceInfo,
-  turnOn,
-  turnOff,
-  TapoDevice,
-  TapoDeviceKey,
-} from "tp-link-tapo-connect";
+import { cloudLogin, loginDeviceByIp, TapoDevice } from "tp-link-tapo-connect";
 
-import { Device, DeviceStatusEnum, DeviceTypeEnum, Preferences } from "./types";
+import { AvailableDevice, Device, DeviceStatusEnum, DeviceTypeEnum, Preferences } from "./types";
 import { normaliseMacAddress } from "./utils";
 
 const tapoDeviceTypeToDeviceType = (tapoDeviceType: string): DeviceTypeEnum => {
@@ -36,7 +27,7 @@ const tapoDeviceToDevice = (tapoDevice: TapoDevice): Device => ({
   status: DeviceStatusEnum.Loading,
   isTurnedOn: null,
   ipAddress: null,
-  deviceKey: null,
+  loggedInDevice: null,
 });
 
 const isSupportedDevice = (device: Device): boolean =>
@@ -45,29 +36,29 @@ const isSupportedDevice = (device: Device): boolean =>
 export const getDevices = async (): Promise<Device[]> => {
   const { email, password } = await getPreferenceValues<Preferences>();
 
-  const cloudToken = await cloudLogin(email, password);
-  const tapoDevices = await listDevices(cloudToken);
+  const cloudApi = await cloudLogin(email, password);
+  const tapoDevices = await cloudApi.listDevices();
 
   return tapoDevices.map(tapoDeviceToDevice).filter(isSupportedDevice);
 };
 
-export const turnDeviceOn = async (device: Device): Promise<void> => {
+export const turnDeviceOn = async (device: AvailableDevice): Promise<void> => {
   const toast = await showToast({ title: `Turning ${device.alias} on...`, style: Toast.Style.Animated });
 
   // We will only call this function with available, logged-in devices, so we can
   // assume that they key is there.
-  await turnOn(device.deviceKey as TapoDeviceKey);
+  await device.loggedInDevice.turnOn();
 
   toast.hide();
   await showToast({ title: `Turned ${device.alias} on.`, style: Toast.Style.Success });
 };
 
-export const turnDeviceOff = async (device: Device): Promise<void> => {
+export const turnDeviceOff = async (device: AvailableDevice): Promise<void> => {
   const toast = await showToast({ title: `Turning ${device.alias} off...`, style: Toast.Style.Animated });
 
   // We will only call this function with available, logged-in devices, so we can
   // assume that they key is there.
-  await turnOff(device.deviceKey as TapoDeviceKey);
+  await device.loggedInDevice.turnOff();
 
   toast.hide();
   await showToast({ title: `Turned ${device.alias} off.`, style: Toast.Style.Success });
@@ -97,11 +88,11 @@ export const queryDevicesOnLocalNetwork = async (devices: Device[]): Promise<Dev
   return Promise.all(
     devices.map(async (device) => {
       if (device.ipAddress) {
-        const deviceKey = await loginDeviceByIp(email, password, device.ipAddress);
-        const deviceInfo = await getDeviceInfo(deviceKey);
+        const loggedInDevice = await loginDeviceByIp(email, password, device.ipAddress);
+        const deviceInfo = await loggedInDevice.getDeviceInfo();
         const isTurnedOn = deviceInfo.device_on;
 
-        return { ...device, deviceKey, isTurnedOn };
+        return { ...device, loggedInDevice, isTurnedOn };
       } else {
         // We haven't been able to locate this device on the local network, so we won't
         // be able to query its state.

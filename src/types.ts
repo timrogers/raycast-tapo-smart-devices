@@ -1,4 +1,8 @@
-import { TapoDeviceKey } from "tp-link-tapo-connect";
+import { loginDeviceByIp } from "tp-link-tapo-connect";
+
+type PromiseType<T extends Promise<unknown>> = T extends Promise<infer U> ? U : never;
+
+export type LoggedInDevice = PromiseType<ReturnType<typeof loginDeviceByIp>>;
 
 export enum DeviceTypeEnum {
   Bulb = "bulb",
@@ -26,9 +30,10 @@ export interface Device {
   status: DeviceStatusEnum;
   isTurnedOn: boolean | null;
   ipAddress: string | null;
-  deviceKey: TapoDeviceKey | null;
+  loggedInDevice: LoggedInDevice | null;
 }
 
 export interface AvailableDevice extends Device {
   ipAddress: string;
+  loggedInDevice: LoggedInDevice;
 }
