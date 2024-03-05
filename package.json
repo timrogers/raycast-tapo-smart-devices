@@ -44,7 +44,7 @@
   "dependencies": {
     "@raycast/api": "^1.68.1",
     "local-devices": "^4.0.0",
-    "tp-link-tapo-connect": "^2.0.0"
+    "tp-link-tapo-connect": "^2.0.4"
   },
   "devDependencies": {
     "@types/node": "~20.11.20",
