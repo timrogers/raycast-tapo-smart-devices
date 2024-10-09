@@ -22,7 +22,7 @@ const refreshDevices = async (
 
   try {
     devices = await getDevices();
-  } catch (error) {
+  } catch {
     setIsLoadingFn(false);
     return;
   }
