@@ -1,5 +1,6 @@
 import { ActionPanel, List, Action, showToast, Toast } from "@raycast/api";
 import { useEffect, useState } from "react";
+import type { JSX } from "react";
 
 import { AvailableDevice, Device } from "./types";
 import {
