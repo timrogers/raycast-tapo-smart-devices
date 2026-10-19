@@ -26,31 +26,29 @@ const refreshDevices = async (
     loadingToast = await showToast({ title: "Fetching devices...", style: Toast.Style.Animated });
   }
 
-  let devices;
-
   try {
-    devices = await getDevices();
+    const devices = await getDevices();
+    const locatedDevices = await locateDevicesOnLocalNetwork(devices);
+    const augmentedLocatedDevices = await queryDevicesOnLocalNetwork(locatedDevices);
+    setDevicesFn(augmentedLocatedDevices);
+
+    if (loadingToast) {
+      await loadingToast.hide();
+    }
+
+    const availableDevices = augmentedLocatedDevices.filter(isAvailableDevice);
+
+    if (shouldDisplayToast) {
+      await showToast({ title: `Found ${availableDevices.length} available devices`, style: Toast.Style.Success });
+    }
   } catch (error) {
+    if (loadingToast) {
+      await loadingToast.hide();
+    }
     showToast({ title: (error as Error).toString(), style: Toast.Style.Failure });
+  } finally {
     setIsLoadingFn(false);
-    return;
   }
-
-  const locatedDevices = await locateDevicesOnLocalNetwork(devices);
-  const augmentedLocatedDevices = await queryDevicesOnLocalNetwork(locatedDevices);
-  setDevicesFn(augmentedLocatedDevices);
-
-  if (loadingToast) {
-    await loadingToast.hide();
-  }
-
-  const availableDevices = augmentedLocatedDevices.filter(isAvailableDevice);
-
-  if (shouldDisplayToast) {
-    await showToast({ title: `Found ${availableDevices.length} available devices`, style: Toast.Style.Success });
-  }
-
-  setIsLoadingFn(false);
 };
 
 const AvailableDeviceListItem = (props: {
